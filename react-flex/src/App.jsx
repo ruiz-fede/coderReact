@@ -1,26 +1,20 @@
-import { useState } from 'react'
-import './App.css'
-import NavBar from './components/NavBar.jsx';
-import ItemListComponents from './components/ItemListComponents.jsx';
 
-function App() {
-  const [count, setCount] = useState(0)
+import { useState } from 'react';
+import NavBar from './components/NavBar';
+import ItemListContainer from './components/ItemListContainer';
+
+const App = () => {
+  const [cartItems, setCartItems] = useState([]);
+
+  const isEmptyCart = cartItems.length === 0;
 
   return (
-    <>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <div className="App">
+      <NavBar />
+      <ItemListContainer message="Tenemos lo último en ...." />
+    </div>
+  );
+};
 
-export default App
+export default App;
+
