@@ -1,8 +1,10 @@
+import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import './ItemListContainer.css';
+import './CategoryContainer.css';
 
-const ItemListContainer = ({ message }) => {
+const CategoryContainer = () => {
+  const { categoryId } = useParams();
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
@@ -18,17 +20,17 @@ const ItemListContainer = ({ message }) => {
         { id: 8, name: 'Iphone 2', category: 'Iphone', img: 'ruta_de_la_imagen_8' },
         { id: 9, name: 'Iphone 3', category: 'Iphone', img: 'ruta_de_la_imagen_9' },
       ];
+      const filteredProducts = productsData.filter(product => product.category === categoryId);
       await new Promise(resolve => setTimeout(resolve, 1000));
-      setProducts(productsData);
+      setProducts(filteredProducts);
     };
 
     fetchProducts();
-  }, []);
+  }, [categoryId]);
 
   return (
-    <div className="item-list-container">
-      <h1>Bienvenidos</h1>
-      <p>{message}</p>
+    <div className="category-container">
+      <h1>Productos en la categoría: {categoryId}</h1>
       <div className="grid-container">
         {products.map(product => (
           <div key={product.id} className="grid-item">
@@ -43,4 +45,4 @@ const ItemListContainer = ({ message }) => {
   );
 };
 
-export default ItemListContainer;
+export default CategoryContainer;

@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import CartWidget from './CartWidget';
 
 const NavBar = () => {
@@ -7,10 +8,9 @@ const NavBar = () => {
         <img src="" alt="Logo" />
       </div>
       <ul className="nav-links">
-        <li><a href="/">Home</a></li>
-        <li><a href="">Products</a></li>
-        <li><a href="">About</a></li>
-        <li><a href="">Contact</a></li>
+        <li><Link to="/">Home</Link></li>
+        <li><Link to="/category/Android">Android</Link></li>
+        <li><Link to="/category/Iphone">Iphone</Link></li>
       </ul>
       <CartWidget />
     </nav>
