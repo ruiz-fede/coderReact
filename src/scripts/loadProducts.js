@@ -1,4 +1,4 @@
-import { collection, query, where, getDocs, updateDoc, doc } from 'firebase/firestore';
+import { collection, query, where, getDocs, addDoc } from 'firebase/firestore';
 import { db } from '../firebase/firebaseConfig';
 import img1 from '../img/SGS24U.png';
 import img2 from '../img/GP8A.png';
@@ -9,6 +9,7 @@ import img6 from '../img/IP15PM.png';
 import img7 from '../img/IP15P.png';
 import img8 from '../img/IP14PM.png';
 import img9 from '../img/IP14.png';
+
 
 const products = [
   {name: "Samsung Galaxy S24 Ultra", price: 1050, stock: 10, category: "Android", image: img1},
@@ -22,26 +23,22 @@ const products = [
   {name: "Iphone 14", price: 699, stock: 8, category: "Iphone", image: img9 },
 ];
 
-const loadImages = async () => {
+
+const loadProducts = async () => {
+  
   const productsCollection = collection(db, 'products');
+  
 
   for (const product of products) {
     const q = query(productsCollection, where('name', '==', product.name));
     const querySnapshot = await getDocs(q);
 
-    if (!querySnapshot.empty) {
-      const productDoc = querySnapshot.docs[0];
-      const productData = productDoc.data();
-
-      if (!productData.image || productData.image !== product.image) {
-        const productRef = doc(db, 'products', productDoc.id);
-        await updateDoc(productRef, { image: product.image });
-        console.log(`Updated image for ${product.name}`);
-      }
+    if (querySnapshot.empty) {
+      await addDoc(productsCollection, product);
     } else {
-      console.log(`Product ${product.name} not found in the database.`);
+      console.log(`Product withoduct.id} already exists.`);
     }
   }
 };
 
-export default loadImages;
+export default loadProducts;
